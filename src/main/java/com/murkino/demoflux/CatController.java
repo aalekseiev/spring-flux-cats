@@ -1,6 +1,7 @@
 package com.murkino.demoflux;
 
 import java.time.Duration;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
 import org.springframework.http.MediaType;
@@ -23,8 +24,9 @@ public class CatController {
 
 	@GetMapping(value = "/cats", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public Flux<Cat> listenToAll() {
-		Flux<Cat> catFlux = Flux.fromStream(Stream.generate(() -> new Cat(System.currentTimeMillis(),
-				"nejm" + System.currentTimeMillis(), "color" + System.currentTimeMillis())));
+		AtomicLong cntr = new AtomicLong();
+		Flux<Cat> catFlux = Flux.fromStream(Stream.generate(() -> new Cat(cntr.incrementAndGet(),
+				"nejm" + cntr.get(), "color" + cntr.get())));
 		Flux<Long> durationFlux = Flux.interval(Duration.ofSeconds(1));
 		return Flux.zip(catFlux, durationFlux).map(
 				Tuple2::getT1
