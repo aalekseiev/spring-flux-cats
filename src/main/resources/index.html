@@ -1,0 +1,15 @@
+<html>
+<head>
+<title>Client for Flux&lt;Cat&gt;</title>
+</head>
+<body>
+
+<script>
+	var eventSource = new EventSource("http://localhost:8080/cats");
+	
+	eventSource.onmessage = function(e) {
+	  console.log("Пришло сообщение: " + e.data);
+	};
+</script>
+</body>
+</html>

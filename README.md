@@ -10,3 +10,8 @@ To subscribe to the Flux<Cat>
 <pre>
 curl http://localhost:8080/cats
 </pre>
+
+For npm version 3: install rxjs
+<pre>
+npm install @reactivex/rxjs
+</pre>
